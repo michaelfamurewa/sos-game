@@ -1,8 +1,9 @@
-const { GameBoard } = require('./utils.js')
+const { GameBoard, GeneralGame } = require('./utils.js')
 
 
 // AI-generated tests below
 
+// Sprint 2 tests
 describe('Make Board', () => {
     it('should create a 9x9 game board', () => {
         const size = 9;
@@ -82,6 +83,86 @@ describe('Make Move', () => {
         expect(() => gameBoard.playerMove(invalidRow, invalidCol, playerSymbol)).not.toThrow();
         // Ensure no change to the board
         expect(gameBoard.board[invalidRow]).toBeUndefined();
+    });
+});
+
+
+// Sprint 3 tests
+describe('GameBoard', () => {
+    let gameBoard;
+
+    beforeEach(() => {
+        gameBoard = new GeneralGame(3);
+    });
+
+    test('should detect an SOS sequence horizontally', () => {
+        gameBoard.playerMove(0, 0, 'S');
+        gameBoard.playerMove(0, 1, 'O');
+        gameBoard.playerMove(0, 2, 'S');
+
+        const result = gameBoard.Check(0, 1); // Check at the middle position
+        expect(result).toEqual([
+            {
+                l: { row: 0, col: 0 },
+                m: { row: 0, col: 1 },
+                r: { row: 0, col: 2 },
+            }
+        ]);
+    });
+
+    test('should detect an SOS sequence vertically', () => {
+        gameBoard.playerMove(0, 0, 'S');
+        gameBoard.playerMove(1, 0, 'O');
+        gameBoard.playerMove(2, 0, 'S');
+
+        const result = gameBoard.Check(1, 0); // Check at the middle position
+        expect(result).toEqual([
+            {
+                l: { row: 0, col: 0 },
+                m: { row: 1, col: 0 },
+                r: { row: 2, col: 0 },
+            }
+        ]);
+    });
+
+    test('should detect an SOS sequence diagonally', () => {
+        gameBoard.playerMove(0, 0, 'S');
+        gameBoard.playerMove(1, 1, 'O');
+        gameBoard.playerMove(2, 2, 'S');
+
+        const result = gameBoard.Check(1, 1); // Check at the middle position
+        expect(result).toEqual([
+            {
+                l: { row: 0, col: 0 },
+                m: { row: 1, col: 1 },
+                r: { row: 2, col: 2 },
+            }
+        ]);
+    });
+
+    test('should not detect a sequence if it is incomplete', () => {
+        gameBoard.playerMove(0, 0, 'S');
+        gameBoard.playerMove(0, 1, 'O');
+
+        const result = gameBoard.Check(0, 1); // Check at the middle position
+        expect(result).toEqual(['none']); // No SOS sequences detected
+    });
+
+    test('should return ["full"] when the board is full', () => {
+        // Fill the board completely (example scenario)
+        const moves = [
+            ['S', 'O', 'S'],
+            ['O', 'S', 'O'],
+            ['S', 'O', 'S']
+        ];
+        moves.forEach((row, r) => {
+            row.forEach((val, c) => {
+                gameBoard.playerMove(r, c, val);
+            });
+        });
+
+        const result = gameBoard.Check(1, 1); // Check at the middle position
+        expect(result).toEqual(['full']);
     });
 });
 

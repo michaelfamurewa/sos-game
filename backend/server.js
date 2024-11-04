@@ -24,14 +24,29 @@ app.get('/playerMove/:move', (req, res) => {
     let { move } = req.params
     let { row, col, val } = JSON.parse(move)
     board.playerMove(row, col, val)
-    console.log(board.board)
+    res.send(board.Check(row, col))
 })
 
 app.get('/configs', (req, res) => {
-    board = new utils.GameBoard(n, mode)
+
+    if (mode === 'simple') {
+        board = new utils.SimpleGame(n)
+    } else {
+        board = new utils.GeneralGame(n)
+    }
+
     const configs = {
-        mode: board.mode,
-        board: board.board
+        board: board.board,
+        mode: mode
+    }
+    res.send(configs)
+})
+
+app.get('/reset', (req, res) => {
+    board.reset()
+    const configs = {
+        board: board.board,
+        mode: mode
     }
     res.send(configs)
 })

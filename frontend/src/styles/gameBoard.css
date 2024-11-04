@@ -5,6 +5,20 @@
     align-items: center;
 }
 
+.pointsDisplay {
+    color: white;
+    margin-left: 5rem;
+}
+
+.p1 {
+    color: red;
+}
+
+.p2 {
+    margin-left: 1rem;
+    color: blue;
+}
+
 .row {
     display: flex;
     flex-direction: row;
@@ -15,15 +29,23 @@
     width: 4rem;
     height: 4rem;
     border: solid 0.1rem white;
-    color: red;
+    color: white;
     font-size: 2.5rem;
     text-align: center;
     cursor: pointer;
 }
 
+.turnDisplay {
+    font-size: 1.5rem;
+    margin: 0;
+    margin-left: 3rem;
+}
+
 .letterSelector {
     color: white;
     margin-top: 2rem;
+    display: flex;
+    justify-content: center;
 }
 
 .letterSelector button {
@@ -34,6 +56,8 @@
     font-size: 1rem;
     transition: 0.25s;
     cursor: pointer;
+    height: fit-content;
+    margin-left: 0.5rem;
 }
 
 .letterSelector button:hover {
