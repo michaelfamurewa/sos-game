@@ -27,6 +27,11 @@ app.get('/playerMove/:move', (req, res) => {
     res.send(board.Check(row, col))
 })
 
+app.get('/computerMove', (req, res) => {
+    let move = board.computerMove()
+    res.send(move)
+})
+
 app.get('/configs', (req, res) => {
 
     if (mode === 'simple') {

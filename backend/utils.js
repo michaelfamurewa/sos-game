@@ -133,6 +133,23 @@ class GameBoard {
 
         return successes
     }
+    computerMove() {
+        let letter = Math.floor(Math.random() * 2)
+        letter = letter === 1 ? 'S' : 'O'
+        let row = Math.floor(Math.random() * this.size)
+        let col = Math.floor(Math.random() * this.size)
+
+        // Make sure spot is not taken already
+        while (this.board[row][col] !== null) {
+            letter = Math.floor(Math.random() * 2)
+            letter = letter === 1 ? 'S' : 'O'
+            row = Math.floor(Math.random() * this.size)
+            col = Math.floor(Math.random() * this.size)
+        }
+        this.playerMove(row, col, letter)
+
+        return { row: row, col: col, val: letter }
+    }
 }
 
 class SimpleGame extends GameBoard {
@@ -168,10 +185,6 @@ class GeneralGame extends GameBoard {
 
         let win = this.check(row, col)
 
-        if (win.length > 0) {
-            return win
-        }
-
         let filled = 0
 
         for (let i = 0; i < this.size; i++) {
@@ -183,7 +196,10 @@ class GeneralGame extends GameBoard {
         }
 
         if (filled == this.size * this.size) {
-            return ['full']
+            return ['full', win]
+        }
+        else if (win.length > 0) {
+            return win
         }
 
         return ['none']

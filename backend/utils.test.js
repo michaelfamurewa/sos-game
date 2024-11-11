@@ -1,8 +1,5 @@
 const { GameBoard, GeneralGame } = require('./utils.js')
 
-
-// AI-generated tests below
-
 // Sprint 2 tests
 describe('Make Board', () => {
     it('should create a 9x9 game board', () => {
@@ -162,8 +159,40 @@ describe('GameBoard', () => {
         });
 
         const result = gameBoard.Check(1, 1); // Check at the middle position
-        expect(result).toEqual(['full']);
+        expect(result[0]).toEqual('full');
     });
 });
 
-// End of AI-generated tests
+// Sprint 4 tests
+describe('Computer opponent', () => {
+    let gameBoard;
+
+    // Set up a fresh game board before each test
+    beforeEach(() => {
+        gameBoard = new GameBoard(3);
+    });
+
+    test('computerMove should return a valid move (row, col, val)', () => {
+        const move = gameBoard.computerMove();
+        expect(move).toHaveProperty('row');
+        expect(move).toHaveProperty('col');
+        expect(move).toHaveProperty('val');
+    });
+
+    test('computerMove should not overwrite an existing move', () => {
+        // Occupy a few spots
+        gameBoard.playerMove(0, 0, 'S');
+        gameBoard.playerMove(0, 1, 'O');
+        gameBoard.playerMove(1, 1, 'S');
+
+        // Make a computer move
+        const move = gameBoard.computerMove();
+
+        // Ensure the computer doesn't overwrite an existing spot
+        expect(gameBoard.board[move.row][move.col]).toBe(move.val);
+        expect(gameBoard.board[0][0]).toBe('S');
+        expect(gameBoard.board[0][1]).toBe('O');
+        expect(gameBoard.board[1][1]).toBe('S');
+    });
+
+});
