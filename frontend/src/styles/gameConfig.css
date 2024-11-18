@@ -10,7 +10,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
-    width: 50rem;
+    width: 65rem;
     text-decoration: none;
 }
 
@@ -45,6 +45,18 @@
     transition: 0.25s;
 }
 
+.onlineButton {
+    background-color: #194FE8;
+    border: none;
+    border-radius: 0.5em;
+    font-size: 2rem;
+    font-weight: 500;
+    padding: 1em 2em;
+    color: white;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
 .simpleButton:hover {
     background-color: white;
     color: #24A681;
@@ -53,6 +65,11 @@
 .generalButton:hover {
     background-color: white;
     color: #F28705;
+}
+
+.onlineButton:hover {
+    background-color: white;
+    color: #194FE8;
 }
 
 h2 {
